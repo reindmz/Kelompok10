@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:cekBarang" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:cekBarang">
+<types>
+<xsd:schema targetNamespace="urn:cekBarang"
+>
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+ <xsd:complexType name="barang">
+  <xsd:all>
+   <xsd:element name="nama" type="xsd:string" nama="nama"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="respon">
+  <xsd:all>
+   <xsd:element name="status" type="xsd:string" nama="status"/>
+  </xsd:all>
+ </xsd:complexType>
+</xsd:schema>
+</types>
+<message name="cekBarang">
+  <part name="barang" type="tns:barang" /></message>
+<message name="cekBarangResponse">
+  <part name="respon" type="tns:respon" /></message>
+<portType name="cekBarangPortType">
+  <operation name="cekBarang">
+    <documentation>Cari Validasi apakah Barang tersedia di Inventaris</documentation>
+    <input message="tns:cekBarang"/>
+    <output message="tns:cekBarangResponse"/>
+  </operation>
+</portType>
+<binding name="cekBarangBinding" type="tns:cekBarangPortType">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="cekBarang">
+    <soap:operation soapAction="http://localhost/tstsoap/service.php/cekBarang" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:cekBarang" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:cekBarang" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+<service name="cekBarang">
+  <port name="cekBarangPort" binding="tns:cekBarangBinding">
+    <soap:address location="http://localhost/tstsoap/service.php"/>
+  </port>
+</service>
+</definitions>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://localhost/soap"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://localhost/soap"
+             name="InventoryService">
+
+    <!-- Types -->
+    <types>
+        <xsd:schema targetNamespace="http://localhost/soap">
+            <xsd:element name="getLowStockNotificationRequest" type="xsd:anyType"/>
+            <xsd:element name="getLowStockNotificationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="items" type="tns:LowStockItems" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="LowStockItems">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:string"/>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="stock" type="xsd:int"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+
+    <!-- Message Definitions -->
+    <message name="getLowStockNotificationRequestMessage">
+        <part name="parameters" element="tns:getLowStockNotificationRequest"/>
+    </message>
+    <message name="getLowStockNotificationResponseMessage">
+        <part name="parameters" element="tns:getLowStockNotificationResponse"/>
+    </message>
+
+    <!-- Port Type -->
+    <portType name="InventoryServicePortType">
+        <operation name="getLowStockNotification">
+            <input message="tns:getLowStockNotificationRequestMessage"/>
+            <output message="tns:getLowStockNotificationResponseMessage"/>
+        </operation>
+    </portType>
+
+    <!-- Binding -->
+    <binding name="InventoryServiceBinding" type="tns:InventoryServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getLowStockNotification">
+            <soap:operation soapAction="http://localhost/soap#getLowStockNotification"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service -->
+    <service name="InventoryService">
+        <port name="InventoryServicePort" binding="tns:InventoryServiceBinding">
+            <soap:address location="http://localhost/soap/server.php"/>
+        </port>
+    </service>
+</definitions>

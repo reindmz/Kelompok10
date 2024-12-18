@@ -1,0 +1,17 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <return>
+            <item>
+                <id>P001</id>
+                <name>Produk A</name>
+                <stock>5</stock>
+            </item>
+            <item>
+                <id>P002</id>
+                <name>Produk B</name>
+                <stock>3</stock>
+            </item>
+        </return>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+

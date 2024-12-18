@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://localhost/WSInventaris/Server.php" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Inventaris" targetNamespace="http://localhost/WSInventaris/Server.php">
+  <types>
+    <xsd:schema targetNamespace="http://localhost/WSInventaris/Server.php">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+    </xsd:schema>
+  </types>
+  <portType name="InventarisPort">
+    <operation name="notifikasiRestock">
+      <documentation>Deteksi perubahan stok barang dan kirim notifikasi ke sistem marketing</documentation>
+      <input message="tns:notifikasiRestockIn"/>
+      <output message="tns:notifikasiRestockOut"/>
+    </operation>
+    <operation name="siapkanDataRestock">
+      <documentation>Menyiapkan data produk yang di-restock</documentation>
+      <input message="tns:siapkanDataRestockIn"/>
+      <output message="tns:siapkanDataRestockOut"/>
+    </operation>
+    <operation name="kirimNotifikasiKeMarketing">
+      <documentation>Mengirim notifikasi ke sistem marketing melalui API</documentation>
+      <input message="tns:kirimNotifikasiKeMarketingIn"/>
+      <output message="tns:kirimNotifikasiKeMarketingOut"/>
+    </operation>
+    <operation name="retryKirimNotifikasi">
+      <documentation>Retry mengirim notifikasi ke sistem marketing</documentation>
+      <input message="tns:retryKirimNotifikasiIn"/>
+    </operation>
+  </portType>
+  <binding name="InventarisBinding" type="tns:InventarisPort">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="notifikasiRestock">
+      <soap:operation soapAction="http://localhost/WSInventaris/Server.php#notifikasiRestock"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </output>
+    </operation>
+    <operation name="siapkanDataRestock">
+      <soap:operation soapAction="http://localhost/WSInventaris/Server.php#siapkanDataRestock"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </output>
+    </operation>
+    <operation name="kirimNotifikasiKeMarketing">
+      <soap:operation soapAction="http://localhost/WSInventaris/Server.php#kirimNotifikasiKeMarketing"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </output>
+    </operation>
+    <operation name="retryKirimNotifikasi">
+      <soap:operation soapAction="http://localhost/WSInventaris/Server.php#retryKirimNotifikasi"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/WSInventaris/Server.php"/>
+      </output>
+    </operation>
+  </binding>
+  <message name="notifikasiRestockIn">
+    <part name="productId" type="xsd:int"/>
+    <part name="newStock" type="xsd:int"/>
+  </message>
+  <message name="notifikasiRestockOut">
+    <part name="return" type="soap-enc:Array"/>
+  </message>
+  <message name="siapkanDataRestockIn">
+    <part name="productId" type="xsd:int"/>
+    <part name="newStock" type="xsd:int"/>
+  </message>
+  <message name="siapkanDataRestockOut">
+    <part name="return" type="soap-enc:Array"/>
+  </message>
+  <message name="kirimNotifikasiKeMarketingIn">
+    <part name="data" type="soap-enc:Array"/>
+  </message>
+  <message name="kirimNotifikasiKeMarketingOut">
+    <part name="return" type="xsd:boolean"/>
+  </message>
+  <message name="retryKirimNotifikasiIn">
+    <part name="data" type="soap-enc:Array"/>
+  </message>
+  <service name="InventarisService">
+    <port name="InventarisPort" binding="tns:InventarisBinding">
+      <soap:address location="http://localhost/WSInventaris/Server.php"/>
+    </port>
+  </service>
+</definitions>
